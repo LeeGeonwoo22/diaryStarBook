@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "286219943559",
+    "project_id": "starbook-clone-6dbe1",
+    "storage_bucket": "starbook-clone-6dbe1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286219943559:android:7359cb44ef80436b788222",
+        "android_client_info": {
+          "package_name": "com.example.star_book_refactory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB4zcf_YEDzMULpBfGbGmgNNyvi3SZgBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
