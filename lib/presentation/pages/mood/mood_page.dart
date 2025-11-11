@@ -35,19 +35,34 @@ class MoodPage extends StatelessWidget {
                   );
                 }
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: (){
-                context.read<MoodBloc>().add(
-                    AddMood(Mood(
-                      id: DateTime.now().toString(),
-                      emoji: '😊',
-                      label: '좋아요!',
-                    ))
-                );
-              },
-              child:
-              const Icon(Icons.add)
-              ,),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Row(
+              children: [
+                FloatingActionButton(
+                  onPressed: (){
+                    context.read<MoodBloc>().add(
+                        AddMood(Mood(
+                          id: DateTime.now().toString(),
+                          emoji: '😊',
+                          label: '좋아요!',
+                        ))
+                    );
+                  },
+                  child:
+                  const Icon(Icons.add)
+                  ,),
+                FloatingActionButton(
+                  onPressed: (){
+                    context.read<MoodBloc>().add(
+                        RemoveMood(DateTime.now().toString())
+                    );
+                  },
+                  child:
+                  const Icon(Icons.add)
+                  ,),
+              ],
+            ),
+
           );
         },
       ),

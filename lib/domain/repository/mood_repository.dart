@@ -3,20 +3,21 @@ import 'package:star_book_refactory/domain/models/mood.dart';
 
 class MoodRepository {
   static const _boxName = 'moodBox';
-  late Box _box;
-  Future<void> init() async{
-    _box = await Hive.openBox(_boxName);
+
+  Box get _box => Hive.box(_boxName); // ✅ 이미 열린 Box 참조
+
+  List<Mood> getAllMoods() {
+    final moods = _box.values
+        .map((e) => Mood.fromMap(Map<String, dynamic>.from(e)))
+        .toList();
+    return moods;
   }
 
-  final List<Mood> _moods = [];
-
-  List<Mood> getAllMoods() => List.unmodifiable(_moods);
-
   void addMood(Mood mood) {
-    _moods.add(mood);
+    _box.put(mood.id, mood.toMap());
   }
 
   void removeMood(String id) {
-    _moods.removeWhere((m) => m.id == id);
+    _box.delete(id);
   }
 }
