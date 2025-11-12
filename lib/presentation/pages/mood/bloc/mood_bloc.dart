@@ -19,5 +19,15 @@ class MoodBloc extends Bloc<MoodEvent,MoodState> {
       repository.removeMood(event.id);
       emit(state.copyWith(moods: repository.getAllMoods()));
     });
+
+    on<ClearMoods>((event, emit) async {
+      await repository.clearAllMoods();
+      emit(state.copyWith(moods: []));
+    });
+    on<ResetHive>((event, emit) async {
+      await repository.resetHive();
+      emit(const MoodState(moods: []));
+    });
+
   }
 }

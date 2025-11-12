@@ -52,14 +52,13 @@ class MoodPage extends StatelessWidget {
                   const Icon(Icons.add)
                   ,),
                 FloatingActionButton(
-                  onPressed: (){
-                    context.read<MoodBloc>().add(
-                        RemoveMood(DateTime.now().toString())
-                    );
+                  heroTag: 'clear',
+                  backgroundColor: Colors.redAccent,
+                  onPressed: () {
+                    context.read<MoodBloc>().add(ClearMoods());
                   },
-                  child:
-                  const Icon(Icons.add)
-                  ,),
+                  child: const Icon(Icons.delete_forever),
+                ),
               ],
             ),
 

@@ -7,15 +7,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('StarBook Home')),
+      // appBar: AppBar(title: const Text('StarBook Home')),
       body:  Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // ✅ GoRouter 전용 이동 방식
-            context.go('/mood');
-          },
-          child: const Text('무드 트래커로 이동 🌙'),
-        ),
+        child:
+        Text('🏠 홈 화면', style: TextStyle(fontSize: 24)),
+        // ElevatedButton(
+        //   onPressed: () {
+        //     // ✅ GoRouter 전용 이동 방식
+        //     context.go('/mood');
+        //   },
+        //   child: const Text('무드 트래커로 이동 🌙'),
+        // ),
       ),
     );
   }

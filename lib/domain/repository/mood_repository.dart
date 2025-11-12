@@ -3,7 +3,6 @@ import 'package:star_book_refactory/domain/models/mood.dart';
 
 class MoodRepository {
   static const _boxName = 'moodBox';
-
   Box get _box => Hive.box(_boxName); // ✅ 이미 열린 Box 참조
 
   List<Mood> getAllMoods() {
@@ -19,5 +18,13 @@ class MoodRepository {
 
   void removeMood(String id) {
     _box.delete(id);
+  }
+
+  Future<void> clearAllMoods() async{
+    await _box.clear();
+  }
+
+  Future<void> resetHive() async{
+    await Hive.deleteFromDisk();
   }
 }
