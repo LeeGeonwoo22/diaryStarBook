@@ -1,28 +1,40 @@
 import 'package:hive/hive.dart';
 
-part 'journal.g.dart';
+part 'journal.g.dart'; // build_runner가 자동 생성
 
 @HiveType(typeId: 1)
 class Journal {
   @HiveField(0)
-  final String id;
+  late String id;
+
   @HiveField(1)
-  final String title;
+  late String title;
+
   @HiveField(2)
-  final String content;
+  late String content;
+
   @HiveField(3)
-  final DateTime date;
+  late DateTime date;
 
-  Journal(this.id , this.title, this.content, this.date);
+  // ✅ 단 하나의 생성자만 유지
+  Journal({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.date,
+  });
 
-  // fromMap 생성자
-  Journal.fromMap(Map<String, dynamic> map)
-      : id = map['id'] as String,
-        title = map['title'] as String,
-        content = map['content'] as String,
-        date = DateTime.parse(map['date'] as String);
+  // ✅ Map → Journal 변환
+  factory Journal.fromMap(Map<String, dynamic> map) {
+    return Journal(
+      id: map['id'] as String,
+      title: map['title'] as String,
+      content: map['content'] as String,
+      date: DateTime.parse(map['date'] as String),
+    );
+  }
 
-  // toMap 메서드
+  // ✅ Journal → Map 변환
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -17,10 +17,10 @@ class JournalAdapter extends TypeAdapter<Journal> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Journal(
-      fields[0] as String,
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as DateTime,
+      id: fields[0] as String,
+      title: fields[1] as String,
+      content: fields[2] as String,
+      date: fields[3] as DateTime,
     );
   }
 
