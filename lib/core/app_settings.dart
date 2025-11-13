@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AppSettings {
   // box 이름을 정의함
@@ -12,6 +14,9 @@ class AppSettings {
 
   // 초기화 메서드 - box 열기
   Future<void> init() async {
+    //
+    final dir = await getApplicationDocumentsDirectory();
+    await Hive.initFlutter(dir.path);
     _box = await Hive.openBox(_boxName);
   }
 
