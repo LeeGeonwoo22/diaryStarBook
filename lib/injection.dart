@@ -14,11 +14,19 @@ class InjectorSetup {
     // 앱설정
     final appSettings = AppSettings();
     await appSettings.init();
-    Injector.registerLazySingleton(() => AppSettings());
+    Injector.registerLazySingleton<AppSettings>(() => appSettings);
     // core service
-    Injector.registerLazySingleton(() => FirebaseService());
-    Injector.registerLazySingleton(() => ReportingService());
-    Injector.registerLazySingleton(() => AnalyticsService());
+    final reportingService = ReportingService();
+    await reportingService.initialise();
+    Injector.registerLazySingleton<ReportingService>(() => reportingService);
+
+    final firebaseService = FirebaseService();
+    await firebaseService.initialise();
+    Injector.registerLazySingleton<FirebaseService>(() => firebaseService);
+
+    final analyticsService = AnalyticsService();
+    await analyticsService.initialise();
+    Injector.registerLazySingleton<AnalyticsService>(() => analyticsService);
     // domain repositories
     Injector.registerLazySingleton(() => MoodRepository());
     Injector.registerLazySingleton(() => JournalRepository());
