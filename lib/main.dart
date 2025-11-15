@@ -8,6 +8,7 @@ import 'package:star_book_refactory/core/analytics_service.dart';
 import 'package:star_book_refactory/core/reporting_service.dart';
 import 'app.dart';
 import 'core/firebase_service.dart';
+import 'domain/repository/journal_repository.dart';
 
 
 void main() async {
@@ -18,10 +19,12 @@ void main() async {
   await Hive.openBox('moodBox');
   // 의존성 초기화
   await InjectorSetup.initialise();
+  // journalRepository
+  await InjectorSetup.resolve<JournalRepository>().init();
   // firebase 서비스 수동 초기화
-  await InjectorSetup.resolve<FirebaseService>().initialise();
-  await InjectorSetup.resolve<ReportingService>().initialise();
-  await InjectorSetup.resolve<AnalyticsService>().initialise();
+  // await InjectorSetup.resolve<FirebaseService>().initialise();
+  // await InjectorSetup.resolve<ReportingService>().initialise();
+  // await InjectorSetup.resolve<AnalyticsService>().initialise();
   //  화면 방향 고정
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

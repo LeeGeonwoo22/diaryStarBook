@@ -14,7 +14,6 @@ class AppSettings {
 
   // 초기화 메서드 - box 열기
   Future<void> init() async {
-    //
     final dir = await getApplicationDocumentsDirectory();
     await Hive.initFlutter(dir.path);
     _box = await Hive.openBox(_boxName);
