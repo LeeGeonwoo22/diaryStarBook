@@ -44,17 +44,17 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
 
   Future<void> _onDelete(
       DeleteJournal event, Emitter<JournalState> emit) async {
-    print("🗑️ DeleteJournal 이벤트 처리 시작");
-    print("삭제할 ID: ${event.id}");
+        print("🗑️ DeleteJournal 이벤트 처리 시작");
+        print("삭제할 ID: ${event.id}");
 
-    await repository.deleteJournal(event.id);
-    print("✅ Repository deleteJournal 완료");
+      await repository.deleteJournal(event.id);
+        print("✅ Repository deleteJournal 완료");
 
     // 즉시 목록 새로고침
-    final list = repository.getAll();
-    print("📊 삭제 후 일기 수: ${list.length}");
+      final list = repository.getAll();
+        print("📊 삭제 후 일기 수: ${list.length}");
 
-    emit(JournalState(journals: list, isLoading: false));
-    print("✅ 상태 업데이트 완료");
+      emit(JournalState(journals: list, isLoading: false));
+        print("✅ 상태 업데이트 완료");
   }
 }

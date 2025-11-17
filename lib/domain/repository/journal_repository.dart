@@ -49,15 +49,15 @@ class JournalRepository {
     print("✅ Hive 저장 완료");
 
     // Firebase 동기화
-    try {
-      await firebaseService.db
-          .collection("journals")
-          .doc(id)
-          .set(journal.toMap());
-      print("✅ Firebase 저장 완료");
-    } catch (e) {
-      print("❌ Firebase 저장 실패: $e");
-    }
+    // try {
+    //   await firebaseService.db
+    //       .collection("journals")
+    //       .doc(id)
+    //       .set(journal.toMap());
+    //   print("✅ Firebase 저장 완료");
+    // } catch (e) {
+    //   print("❌ Firebase 저장 실패: $e");
+    // }
   }
 
   /// 일기 삭제
