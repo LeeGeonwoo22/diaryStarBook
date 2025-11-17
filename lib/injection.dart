@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-
 import 'core/app_settings.dart';
 import 'domain/repository/journal_repository.dart';
 import 'domain/repository/mood_repository.dart';
@@ -11,27 +10,38 @@ final Injector = GetIt.instance;
 
 class InjectorSetup {
   static Future<void> initialise() async {
-    // 앱설정
+    // ⚙️ 앱 설정 초기화
     final appSettings = AppSettings();
     await appSettings.init();
     Injector.registerLazySingleton<AppSettings>(() => appSettings);
-    // core service
-    final reportingService = ReportingService();
-    await reportingService.initialise();
-    Injector.registerLazySingleton<ReportingService>(() => reportingService);
 
+    // 🔥 Firebase
     final firebaseService = FirebaseService();
     await firebaseService.initialise();
     Injector.registerLazySingleton<FirebaseService>(() => firebaseService);
 
+    // 🧾 Reporting
+    final reportingService = ReportingService();
+    await reportingService.initialise();
+    Injector.registerLazySingleton<ReportingService>(() => reportingService);
+
+    // 📊 Analytics
     final analyticsService = AnalyticsService();
     await analyticsService.initialise();
     Injector.registerLazySingleton<AnalyticsService>(() => analyticsService);
-    // domain repositories
-    Injector.registerLazySingleton(() => MoodRepository());
-    Injector.registerLazySingleton(() => JournalRepository());
+
+    // 🌙 Mood Repository (기본 Hive)
+    final moodRepository = MoodRepository();
+    await moodRepository.init();
+    Injector.registerLazySingleton<MoodRepository>(() => moodRepository);
+
+    // 📔 Journal Repository (Firebase + Hive)
+    final journalRepository = JournalRepository(firebaseService: firebaseService);
+    await journalRepository.init(); // ✅ 반드시 init() 호출
+    Injector.registerLazySingleton<JournalRepository>(() => journalRepository);
 
     print('[Injector] ✅ All services initialized successfully.');
   }
+
   static T resolve<T extends Object>() => Injector<T>();
 }
