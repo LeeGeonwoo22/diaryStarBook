@@ -1,9 +1,11 @@
 import 'package:go_router/go_router.dart';
+import 'package:star_book_refactory/domain/models/journal.dart';
 import 'package:star_book_refactory/presentation/pages/mood/mood_page.dart';
 
 import '../../app.dart';
 import '../pages/home/home_page.dart';
 import '../pages/home/home_shell.dart';
+import '../pages/journal/journal_detail_page.dart';
 import '../pages/journal/journal_page.dart';
 import '../pages/settings/settings_page.dart';
 
@@ -26,6 +28,13 @@ class AppRouter {
             GoRoute(
               path: '/journal',
               builder: (context, state) => const JournalPage(),
+            ),
+            GoRoute(
+              path: '/journal/detail',
+              builder: (context, state) {
+                final journal = state.extra as Journal;
+                return JournalDetailPage(journal: journal,);
+              } ,
             ),
             GoRoute(
               path: '/settings',

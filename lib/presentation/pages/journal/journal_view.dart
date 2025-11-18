@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'bloc/journal_bloc.dart';
 import 'bloc/journal_state.dart';
 import 'bloc/journal_event.dart';
@@ -47,6 +48,9 @@ class JournalView extends StatelessWidget {
                     context.read<JournalBloc>().add(DeleteJournal(j.id));
                   },
                 ),
+                onTap: (){
+                  context.push('/journal/detail', extra: j);
+                },
               );
             }).toList(),
           );
