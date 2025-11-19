@@ -86,4 +86,22 @@ class JournalRepository {
       print("❌ Firebase 삭제 실패: $e");
     }
   }
+
+  Future<void> updateJournal(Journal updated) async {
+    if (!_box.isOpen) await init();
+
+    await _box.put(updated.id, updated);
+    print("✅ Hive 수정 완료");
+
+    try {
+      await firebaseService.db
+          .collection("journals")
+          .doc(updated.id)
+          .update(updated.toMap());
+      print("✅ Firebase 수정 완료");
+    } catch (e) {
+      print("❌ Firebase 수정 실패: $e");
+    }
+  }
+
 }

@@ -12,6 +12,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<LoadJournals>(_onLoad);
     on<AddJournal>(_onAdd);
     on<DeleteJournal>(_onDelete);
+    on<UpdateJournal>(_onUpdate);
   }
 
   Future<void> _onLoad(
@@ -56,5 +57,13 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
 
       emit(JournalState(journals: list, isLoading: false));
         print("✅ 상태 업데이트 완료");
+  }
+
+  Future<void> _onUpdate(UpdateJournal event, Emitter<JournalState> emit) async {
+    print("📝 UpdateJournal 이벤트 처리");
+    await repository.updateJournal(event.updatedJournal);
+
+    final list = repository.getAll();
+    emit(JournalState(journals: list, isLoading: false));
   }
 }

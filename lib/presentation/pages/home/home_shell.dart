@@ -7,6 +7,8 @@ class HomeShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final navTheme = theme.bottomNavigationBarTheme;
     final location = GoRouterState.of(context).uri.toString();
 
     int currentIndex = 0;
@@ -17,9 +19,10 @@ class HomeShell extends StatelessWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.indigo,
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.white.withOpacity(0.6),
+        backgroundColor: navTheme.backgroundColor ?? theme.colorScheme.surface,
+        selectedItemColor: navTheme.selectedItemColor ?? theme.colorScheme.primary,
+        unselectedItemColor:
+        navTheme.unselectedItemColor ?? theme.colorScheme.onSurface.withOpacity(0.6),
         currentIndex: currentIndex,
         onTap: (index) {
           switch (index) {
@@ -38,7 +41,7 @@ class HomeShell extends StatelessWidget {
           }
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈', backgroundColor: Colors.black),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.mood), label: '기분'),
           BottomNavigationBarItem(icon: Icon(Icons.book), label: '일기'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),

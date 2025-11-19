@@ -1,4 +1,6 @@
 
+import '../../../../domain/models/journal.dart';
+
 abstract class JournalEvent {}
 
 class LoadJournals extends JournalEvent {}
@@ -14,4 +16,9 @@ class DeleteJournal extends JournalEvent{
   final String id;
 
   DeleteJournal(this.id);
+}
+
+class UpdateJournal extends JournalEvent {
+  final Journal updatedJournal;
+  UpdateJournal(this.updatedJournal);
 }

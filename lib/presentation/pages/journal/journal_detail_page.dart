@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:star_book_refactory/domain/models/journal.dart';
 
 class JournalDetailPage extends StatelessWidget {
@@ -16,9 +17,10 @@ class JournalDetailPage extends StatelessWidget {
             icon: const Icon(Icons.edit),
             onPressed: () {
               // 나중에 Step 2️⃣ 에서 수정 기능 추가 예정
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("수정 기능은 다음 단계에서 추가됩니다 ✏️")),
-              );
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   const SnackBar(content: Text("수정 기능은 다음 단계에서 추가됩니다 ✏️")),
+              // );
+              context.push('/journal/edit', extra: journal);
             },
           ),
         ],

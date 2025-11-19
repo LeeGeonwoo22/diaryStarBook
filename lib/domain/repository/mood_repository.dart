@@ -56,4 +56,6 @@ class MoodRepository {
     await Hive.deleteFromDisk();
     print("💣 Hive 전체 데이터 삭제 완료");
   }
+
+
 }
