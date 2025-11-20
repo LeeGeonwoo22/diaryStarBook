@@ -20,7 +20,7 @@ class JournalDetailPage extends StatelessWidget {
               // ScaffoldMessenger.of(context).showSnackBar(
               //   const SnackBar(content: Text("수정 기능은 다음 단계에서 추가됩니다 ✏️")),
               // );
-              context.push('/journal/edit', extra: journal);
+              context.push('/journal/${journal.id}/edit', extra: journal);
             },
           ),
         ],
