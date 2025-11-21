@@ -11,12 +11,6 @@ class JournalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => JournalBloc(
-        InjectorSetup.resolve<JournalRepository>(),
-      )..add(LoadJournals()),
-
-      child: const JournalView(),
-    );
+    return const JournalView();
   }
 }
