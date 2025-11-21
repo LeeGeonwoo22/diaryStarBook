@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:star_book_refactory/injection.dart';
 import 'package:star_book_refactory/core/analytics_service.dart';
 import 'package:star_book_refactory/core/reporting_service.dart';
+import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_bloc.dart';
+import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_event.dart';
 import 'package:star_book_refactory/presentation/theme/ultramarine_light.dart';
 import 'app.dart';
 import 'core/firebase_service.dart';
@@ -36,7 +39,15 @@ void main() async {
   );
 
 
-  runApp(const StarBookApp());
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => JournalBloc(
+          InjectorSetup.resolve<JournalRepository>(),
+        )..add(LoadJournals()), // ✅ 앱 실행 시 일기 목록 자동 로드
+        ),
+      ],
+      child: const StarBookApp()));
 }
 
 

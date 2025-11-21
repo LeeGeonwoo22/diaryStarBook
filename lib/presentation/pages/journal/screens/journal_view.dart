@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:star_book_refactory/domain/models/journal.dart';
 import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_bloc.dart';
+import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_event.dart';
 import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_state.dart';
-import 'package:go_router/go_router.dart';
-
 
 class JournalView extends StatelessWidget {
   const JournalView({super.key});
@@ -18,10 +18,16 @@ class JournalView extends StatelessWidget {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
+
           if (state.journals.isEmpty) {
-            return const Center(child: Text('작성된 일기가 없습니다.'));
+            return const Center(
+              child: Text(
+                '작성된 일기가 없습니다.',
+                style: TextStyle(fontSize: 15, color: Colors.grey),
+              ),
+            );
           }
-          // ✅ 리스트 갱신 즉시 Bloc이 emit으로 다시 그립니다
+
           return ListView.builder(
             padding: const EdgeInsets.all(12),
             itemCount: state.journals.length,
@@ -40,7 +46,7 @@ class JournalView extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
-                    overflow: TextOverflow.ellipsis, // ✅ 제목 길면 한 줄로 자름
+                    overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
                     j.content.isEmpty
@@ -49,9 +55,19 @@ class JournalView extends StatelessWidget {
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                   ),
                   onTap: () {
-                    // ✅ 수정페이지 이동 (저장 후 자동 갱신)
-                    context.push('/journal/:id', extra: j);
+                    // ✅ 상세 페이지 or 수정 페이지 이동
+                    context.push('/journal/edit/${j.id}');
                   },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                    tooltip: '삭제',
+                    onPressed: () {
+                      context.read<JournalBloc>().add(DeleteJournal(j.id));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('🗑️ 일기가 삭제되었습니다.')),
+                      );
+                    },
+                  ),
                 ),
               );
             },
@@ -61,14 +77,13 @@ class JournalView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          // ✅ 새 일기 추가 페이지 이동
           final newJournal = Journal(
             id: DateTime.now().toIso8601String(),
             title: '',
             content: '',
             date: DateTime.now(),
           );
-          context.push('edit', extra: newJournal);
+          context.push('/journal/new', extra: newJournal);
         },
       ),
     );
