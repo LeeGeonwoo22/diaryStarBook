@@ -10,8 +10,10 @@ import 'package:star_book_refactory/core/reporting_service.dart';
 import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_bloc.dart';
 import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_event.dart';
 import 'package:star_book_refactory/presentation/theme/ultramarine_light.dart';
+import 'package:star_book_refactory/services/auth/bloc/auth_bloc.dart';
 import 'app.dart';
 import 'core/firebase_service.dart';
+import 'domain/repository/auth_repository.dart';
 import 'domain/repository/journal_repository.dart';
 
 
@@ -41,6 +43,11 @@ void main() async {
 
   runApp(MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (_) => AuthBloc(
+            InjectorSetup.resolve<AuthRepository>(),
+          ),
+        ),
         BlocProvider(
           create: (_) => JournalBloc(
           InjectorSetup.resolve<JournalRepository>(),

@@ -18,12 +18,12 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   Future<void> _onLoad(
       LoadJournals event, Emitter<JournalState> emit) async {
     print("📥 LoadJournals 이벤트 처리 시작");
-    emit(JournalState(journals: [], isLoading: true));
-
     final list = repository.getAll();
     print("📊 로드된 일기 수: ${list.length}");
+    emit(state.copyWith(journals : list,isLoading: true));
 
-    emit(JournalState(journals: list, isLoading: false));
+
+    emit(state.copyWith(journals: list, isLoading: false));
     print("✅ 상태 업데이트 완료");
   }
 
@@ -39,7 +39,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     final list = repository.getAll();
     print("📊 추가 후 일기 수: ${list.length}");
 
-    emit(JournalState(journals: list, isLoading: false));
+    emit(state.copyWith(journals: list, isLoading: false));
     print("✅ 상태 업데이트 완료");
   }
 
@@ -64,6 +64,6 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     await repository.updateJournal(event.updatedJournal);
 
     final list = repository.getAll();
-    emit(JournalState(journals: list, isLoading: false));
+    emit(state.copyWith(journals: list, isLoading: false));
   }
 }

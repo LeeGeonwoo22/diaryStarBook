@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:star_book_refactory/domain/repository/auth_repository.dart';
 import 'core/app_settings.dart';
 import 'domain/repository/journal_repository.dart';
 import 'domain/repository/mood_repository.dart';
@@ -39,7 +40,9 @@ class InjectorSetup {
     final journalRepository = JournalRepository(firebaseService: firebaseService);
     await journalRepository.init(); // ✅ 반드시 init() 호출
     Injector.registerLazySingleton<JournalRepository>(() => journalRepository);
-
+    // auth repository
+    final authRepository = AuthRepositoryImpl();  // AuthRepository()가 아니라 AuthRepositoryImpl()
+    Injector.registerLazySingleton<AuthRepository>(() => authRepository);
     print('[Injector] ✅ All services initialized successfully.');
   }
 

@@ -10,16 +10,27 @@ import '../pages/journal/screens/journal_detail_page.dart';
 import '../pages/journal/journal_page.dart';
 import '../pages/journal/screens/journal_edit_page.dart';
 import '../pages/settings/settings_page.dart';
+import '../pages/signin/login.dart';
+import '../pages/splash/splash.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-      initialLocation: '/home',
+      initialLocation: '/splash',
+
       routes: [
+        GoRoute(path: '/splash',
+        builder: (context, state) => const SplashPage()
+        ),
+        GoRoute(
+          path: '/login',
+          builder: (context, state) => const LoginPage(),
+        ),
         ShellRoute(builder:
         (context, state, child) {
           return HomeShell(child : child);
         },
           routes: [
+
             GoRoute(
               path: '/home', // ✅ 이게 반드시 있어야 합니다
               builder: (context, state) => const HomePage(),
