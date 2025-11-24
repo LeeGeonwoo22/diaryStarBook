@@ -136,6 +136,29 @@ class LoginPage extends StatelessWidget {
                       //   backgroundColor: Colors.white,
                       //   textColor: Colors.black87,
                       // ),
+                      Row(
+                        children: [
+                          Expanded(child: Divider(color: Colors.white.withOpacity(0.3))),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              '또는',
+                              style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                            ),
+                          ),
+                          Expanded(child: Divider(color: Colors.white.withOpacity(0.3))),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      _SocialLoginButton(
+                        onPressed: () {
+                          context.go('/login/email-login');
+                        },
+                        icon: Icons.email_outlined,
+                        label: '이메일로 계속하기',
+                        backgroundColor: const Color(0xFF533483),
+                        textColor: Colors.white,
+                      ),
                     ],
 
                     const Spacer(flex: 1),

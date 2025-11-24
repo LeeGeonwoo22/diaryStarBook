@@ -11,6 +11,8 @@ class AuthBloc extends Bloc<AuthEvent,AuthState>{
   AuthBloc(this._authRepository) : super(AuthInitial()) {
     on<AuthCheckRequested>(_onAuthCheck);
     on<FacebookSignInRequested>(_onFacebookSignIn);
+    on<EmailSignInRequested>(_onEmailSignIn);
+    on<EmailSignUpRequested>(_onEmailSignUp);
     on<SignOutRequested>(_onSignOut);
   }
 
@@ -24,7 +26,6 @@ class AuthBloc extends Bloc<AuthEvent,AuthState>{
     }
   }
 
-
   Future<void> _onFacebookSignIn(
       FacebookSignInRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
@@ -35,6 +36,30 @@ class AuthBloc extends Bloc<AuthEvent,AuthState>{
       emit(AuthAuthenticated(userId: user?.uid, email: user?.email));
     } catch (e) {
       emit(AuthError(e.toString()));
+    }
+  }
+  Future<void> _onEmailSignUp(EmailSignUpRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final user = await _authRepository.signUpWithEmail(
+        event.email,
+        event.password,
+      );
+      emit(AuthAuthenticated(userId: user?.uid, email: user?.email));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> _onEmailSignIn (EmailSignInRequested event, Emitter<AuthState> emit) async{
+    try{
+      final user = await _authRepository.signUpWithEmail(
+          event.email,
+          event.password);
+      emit(AuthAuthenticated(userId: user?.uid, email: user?.email));
+    }
+    catch(e){
+      print('오류 : $e');
     }
   }
 
