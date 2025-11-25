@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_bloc.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_state.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_event.dart';
+import 'package:star_book_refactory/presentation/pages/auth/login/widgets/social_login_button.dart';
+
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -108,7 +111,7 @@ class LoginPage extends StatelessWidget {
                       )
                     else ...[
                       // Facebook 로그인 버튼
-                      _SocialLoginButton(
+                      SocialLoginButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(FacebookSignInRequested());
                         },
@@ -120,7 +123,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(height: 16),
 
                       // Google 로그인 버튼
-                      // _SocialLoginButton(
+                      // SocialLoginButton(
                       //   onPressed: () {
                       //     context.read<AuthBloc>().add(GoogleSignInRequested());
                       //   },
@@ -150,9 +153,9 @@ class LoginPage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _SocialLoginButton(
+                      SocialLoginButton(
                         onPressed: () {
-                          context.go('/login/email-login');
+                          context.go('/email-login');
                         },
                         icon: Icons.email_outlined,
                         label: '이메일로 계속하기',
@@ -185,56 +188,3 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class _SocialLoginButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final IconData? icon;
-  final Widget? iconWidget;
-  final String label;
-  final Color backgroundColor;
-  final Color textColor;
-
-  const _SocialLoginButton({
-    required this.onPressed,
-    this.icon,
-    this.iconWidget,
-    required this.label,
-    required this.backgroundColor,
-    required this.textColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          foregroundColor: textColor,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (iconWidget != null)
-              iconWidget!
-            else if (icon != null)
-              Icon(icon, size: 24),
-            const SizedBox(width: 12),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

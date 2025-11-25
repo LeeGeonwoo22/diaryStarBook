@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_bloc.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_state.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_event.dart';
+import 'package:star_book_refactory/presentation/pages/auth/email_login/widgets/email_text_field.dart';
+import 'package:star_book_refactory/presentation/pages/auth/email_login/widgets/fade_animation_wrapper.dart';
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
 
 class EmailLoginPage extends StatefulWidget {
   const EmailLoginPage({super.key});
@@ -19,25 +21,8 @@ class _EmailLoginPageState extends State<EmailLoginPage> with SingleTickerProvid
   bool _isSignUp = false;
   bool _obscurePassword = true;
 
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
-    );
-    _animationController.forward();
-  }
-
   @override
   void dispose() {
-    _animationController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -101,13 +86,14 @@ class _EmailLoginPageState extends State<EmailLoginPage> with SingleTickerProvid
               ),
             ),
             child: SafeArea(
-              child: FadeTransition(
-                opacity: _fadeAnimation,
+              child:
+              FadeAnimationWrapper(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Form(
                     key: _formKey,
                     child: Column(
+
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 40),
@@ -185,7 +171,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> with SingleTickerProvid
                         const SizedBox(height: 48),
 
                         // 이메일 입력
-                        _buildTextField(
+                        EmailTextField(
                           controller: _emailController,
                           label: '이메일',
                           icon: Icons.email_outlined,
@@ -203,7 +189,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> with SingleTickerProvid
                         const SizedBox(height: 20),
 
                         // 비밀번호 입력
-                        _buildTextField(
+                        EmailTextField(
                           controller: _passwordController,
                           label: '비밀번호',
                           icon: Icons.lock_outline,
@@ -306,72 +292,6 @@ class _EmailLoginPageState extends State<EmailLoginPage> with SingleTickerProvid
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    TextInputType? keyboardType,
-    bool obscureText = false,
-    Widget? suffixIcon,
-    String? Function(String?)? validator,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        obscureText: obscureText,
-        style: const TextStyle(color: Colors.white, fontSize: 16),
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: TextStyle(
-            color: Colors.white.withOpacity(0.6),
-            fontSize: 15,
-          ),
-          prefixIcon: Icon(icon, color: Colors.white.withOpacity(0.5), size: 22),
-          suffixIcon: suffixIcon,
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.08),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.white.withOpacity(0.15), width: 1),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Color(0xFFE94560), width: 2),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.red.shade400, width: 1),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.red.shade400, width: 2),
-          ),
-          errorStyle: TextStyle(
-            color: Colors.red.shade300,
-            fontSize: 12,
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        ),
-        validator: validator,
       ),
     );
   }

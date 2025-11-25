@@ -1,18 +1,16 @@
 import 'package:go_router/go_router.dart';
 import 'package:star_book_refactory/domain/models/journal.dart';
 import 'package:star_book_refactory/presentation/pages/mood/mood_page.dart';
-
-import '../../app.dart';
+import '../pages/auth/login/login.dart';
+import '../pages/auth/email_login/email_login.dart';
+import '../pages/auth/splash/splash.dart';
 import '../pages/home/home_page.dart';
 import '../pages/home/home_shell.dart';
 import '../pages/journal/screens/journal_detail_page.dart';
-
 import '../pages/journal/journal_page.dart';
 import '../pages/journal/screens/journal_edit_page.dart';
 import '../pages/settings/settings_page.dart';
-import '../pages/signin/email_login.dart';
-import '../pages/signin/login.dart';
-import '../pages/splash/splash.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -25,12 +23,10 @@ class AppRouter {
         GoRoute(
           path: '/login',
           builder: (context, state) => const LoginPage(),
-          routes: [
-            GoRoute(
-              path: 'email-login',
-              builder: (context, state) => const EmailLoginPage(),
-            ),
-          ]
+        ),
+        GoRoute(
+          path: '/email-login',
+          builder: (context, state) => const EmailLoginPage(),
         ),
         ShellRoute(builder:
         (context, state, child) {

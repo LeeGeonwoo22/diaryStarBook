@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_bloc.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_state.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_event.dart';
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

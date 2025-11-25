@@ -5,14 +5,10 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:star_book_refactory/injection.dart';
-import 'package:star_book_refactory/core/analytics_service.dart';
-import 'package:star_book_refactory/core/reporting_service.dart';
+import 'package:star_book_refactory/presentation/pages/auth/bloc/auth_bloc.dart';
 import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_bloc.dart';
 import 'package:star_book_refactory/presentation/pages/journal/bloc/journal_event.dart';
-import 'package:star_book_refactory/presentation/theme/ultramarine_light.dart';
-import 'package:star_book_refactory/services/auth/bloc/auth_bloc.dart';
 import 'app.dart';
-import 'core/firebase_service.dart';
 import 'domain/repository/auth_repository.dart';
 import 'domain/repository/journal_repository.dart';
 
