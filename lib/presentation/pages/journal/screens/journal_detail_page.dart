@@ -2,26 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:star_book_refactory/domain/models/journal.dart';
 
-class JournalDetailPage extends StatelessWidget {
+class JournalDetailPage extends StatefulWidget {
   final Journal journal;
 
   const JournalDetailPage({super.key, required this.journal});
 
   @override
+  State<JournalDetailPage> createState() => _JournalDetailPageState();
+}
+
+class _JournalDetailPageState extends State<JournalDetailPage> {
+  late Journal _currentJournal;
+  
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(journal.title),
+        title: Text(_currentJournal.title),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () {
-              // 나중에 Step 2️⃣ 에서 수정 기능 추가 예정
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   const SnackBar(content: Text("수정 기능은 다음 단계에서 추가됩니다 ✏️")),
-              // );
-              context.push('/journal/${journal.id}/edit', extra: journal);
-            },
+            onPressed: () async {
+              final updatedJournal = await context.push<Journal>('/journal/${_currentJournal.id}/edit', extra: _currentJournal);
+              if (updatedJournal != null) {
+                setState((){
+                  _currentJournal = updatedJournal;
+                });
+                print('🔄 [Detail 페이지 갱신됨]');
+            }
+            
+            
+    }
           ),
         ],
       ),
@@ -31,7 +42,7 @@ class JournalDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              journal.title,
+              widget.journal.title,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -39,14 +50,14 @@ class JournalDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              "작성일: ${journal.date.toString().split(' ').first}",
+              "작성일: ${widget.journal.date.toString().split(' ').first}",
               style: const TextStyle(color: Colors.grey),
             ),
             const Divider(height: 32),
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  journal.content,
+                  widget.journal.content,
                   style: const TextStyle(fontSize: 16, height: 1.5),
                 ),
               ),
